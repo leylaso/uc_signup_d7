@@ -30,9 +30,11 @@ function uc_signup_form_submit($form, $form_state) {
 function uc_signup_uc_checkout_complete($order, $account) {
   foreach ($order->products as $product) {
     if (_uc_signup_node_check($product->nid)) {
+      $sid = 0;
       $signup = $product->data['signup'];
       if ($signup['email_address'] == $account->mail) {
-        signup_sign_up_user($signup);
+        $sid = signup_sign_up_user($signup);
+
       }
       else {
         module_load_include('inc', 'signup', 'includes/signup_form');
@@ -45,7 +47,21 @@ function uc_signup_uc_checkout_complete($order, $account) {
           $sid = signup_sign_up_user($signup);
         }
       }
+      $record = array(
+        'sid' => $sid,
+        'oid' => $order->order_id,
+      );
+      drupal_write_record('uc_signup_order', $record);
     }
+  }
+}
+
+/**
+ * Delete order associations when a signup is cancelled
+ */
+function uc_signup_signup_cancel($signup, $node) {
+  if (_uc_signup_node_check($node)) {
+    db_delete('uc_signup_order')->condition('sid', $signup->sid)->execute();
   }
 }
 
