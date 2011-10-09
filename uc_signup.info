@@ -1,0 +1,8 @@
+core = "7.x"
+package = "Signup"
+name = "Signup integration for Ubercart"
+description = "Combine the add to cart and signup behaviours for products with signups enabled"
+php = "5.2.4"
+project = "uc_signup"
+dependencies[] = "uc_cart"
+dependencies[] = "signup"

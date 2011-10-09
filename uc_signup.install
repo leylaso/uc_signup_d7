@@ -1,0 +1,49 @@
+<?php
+/**
+ * @file
+ * Install and uninstall for uc_signup
+ */
+
+/**
+ * Implementation of hook_schema
+ */
+function uc_signup_schema() {
+  $schema = array();
+
+  $schema['uc_signup_order'] = array(
+    'description' => 'Associate order and signup ids',
+    'fields' => array(
+      'oid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'sid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'oid' => array('oid'),
+      'sid' => array('sid'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Install hook
+ */
+function uc_signup_install() {
+}
+
+/**
+ * Uninstall hook
+ */
+function uc_signup_uninstall() {
+  prupal_uninstall_schema('uc_signup');
+}
