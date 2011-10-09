@@ -5,4 +5,5 @@ description = "Combine the add to cart and signup behaviours for products with s
 php = "5.2.4"
 project = "uc_signup"
 dependencies[] = "uc_cart"
+dependencies[] = "uc_product"
 dependencies[] = "signup"
