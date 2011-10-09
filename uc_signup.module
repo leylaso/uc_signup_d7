@@ -25,6 +25,30 @@ function uc_signup_form_validate($form, $form_state) {
 }
 
 /**
+ * Process the signup once the checkout is complete
+ */
+function uc_signup_uc_checkout_complete($order, $account) {
+  foreach ($order->products as $product) {
+    if (_uc_signup_node_check($product->nid)) {
+      $signup = $product->data['signup'];
+      if ($signup['email_address'] == $account->mail) {
+        signup_sign_up_user($signup);
+      }
+      else {
+        module_load_include('inc', 'signup', 'includes/signup_form');
+        $signup['signup_anon_mail'] = $signup['email_address'];
+        if (signup_validate_anon_email($signup['nid'], $signup['signup_anon_mail'])) {
+          $signup['uid'] = 0;
+          unset($signup['email_address']);
+          signup_sign_up_user($signup);
+        }
+        dsm($signup);
+      }
+    }
+  }
+}
+
+/**
  * Helper function tells us if the node is a uc_signup node
  *
  * @param $node
