@@ -36,13 +36,14 @@ function uc_signup_uc_checkout_complete($order, $account) {
       }
       else {
         module_load_include('inc', 'signup', 'includes/signup_form');
-        $signup['signup_anon_mail'] = $signup['email_address'];
+        if (!isset($signup['signup_anon_mail'])) {
+          $signup['signup_anon_mail'] = $signup['email_address'];
+          unset($signup['email_address']);
+        }
         if (signup_validate_anon_email($signup['nid'], $signup['signup_anon_mail'])) {
           $signup['uid'] = 0;
-          unset($signup['email_address']);
-          signup_sign_up_user($signup);
+          $sid = signup_sign_up_user($signup);
         }
-        dsm($signup);
       }
     }
   }
