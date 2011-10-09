@@ -8,17 +8,17 @@
  * Insert our own validation function into the signup form
  */
 function uc_signup_form_signup_form_alter(&$form, &$form_state, $form_id) {
-  $form['#validate'][] = 'uc_signup_form_validate';
+  $node = $form_state['build_info']['args'][0];
+  if (_uc_signup_node_check($node)) {
+    $form['#submit'] = array('uc_signup_form_submit');
+  }
 }
 
 /**
  * Modify the signup workflow if the signup node is a product 
  */
-function uc_signup_form_validate($form, $form_state) {
-  $node = $form_state['build_info']['args'][0];
-  if (_uc_signup_node_check($node)) {
-    $form_state['redirect'] = uc_cart_add_item($form_state['values']['nid'], 1, array('signup' => $form_state['values']));
-  }
+function uc_signup_form_submit($form, $form_state) {
+  $form_state['redirect'] = uc_cart_add_item($form_state['values']['nid'], 1, array('signup' => $form_state['values']));
   drupal_set_message(t('You will be signed up to !node after checkout.', array('!node' => l($node->title, 'node/' . $node->nid))));
   // Bypass the form submission by going directly to the cart
   drupal_goto($form_state['redirect']);
