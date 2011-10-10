@@ -49,7 +49,7 @@ function uc_signup_uc_checkout_complete($order, $account) {
       }
       $record = array(
         'sid' => $sid,
-        'oid' => $order->order_id,
+        'order_id' => $order->order_id,
       );
       drupal_write_record('uc_signup_order', $record);
       watchdog('uc_signup', t('Saved signup !sid after checkout of order !oid', array('!sid' => l($sid, 'node/' . $product->nid . '/signups'), '!oid' => l($order->order_id, 'admin/store/orders/' . $order->order_id))));

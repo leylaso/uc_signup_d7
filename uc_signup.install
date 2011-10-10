@@ -13,7 +13,7 @@ function uc_signup_schema() {
   $schema['uc_signup_order'] = array(
     'description' => 'Associate order and signup ids',
     'fields' => array(
-      'oid' => array(
+      'order_id' => array(
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
