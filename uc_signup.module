@@ -77,6 +77,17 @@ function uc_signup_signup_cancel($signup, $node) {
 }
 
 /**
+ * Disable the add to cart form for products with signups
+ */
+function uc_signup_form_uc_product_add_to_cart_form_alter(&$form, &$form_state) {
+  $node = $form['node']['#value'];
+  if (_uc_signup_node_check($node)) {
+    unset($form['actions']);
+    unset($form['qty']);
+  }
+}
+
+/**
  * Helper function tells us if the node is a uc_signup node
  *
  * @param $node
