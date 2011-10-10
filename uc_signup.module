@@ -15,6 +15,16 @@ function uc_signup_form_signup_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ * Implementaiton of hook_views_api
+ */
+function uc_signup_views_api() {
+  return array(
+    'api' => 2.0,
+    'path' => drupal_get_path('module', 'uc_signup') . '/views',
+  );
+}
+
+/**
  * Modify the signup workflow if the signup node is a product 
  */
 function uc_signup_form_submit($form, $form_state) {
