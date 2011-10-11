@@ -28,6 +28,7 @@ function uc_signup_views_api() {
  * Modify the signup workflow if the signup node is a product 
  */
 function uc_signup_form_submit($form, $form_state) {
+  $node = $form_state['build_info']['args'][0];
   $form_state['redirect'] = uc_cart_add_item($form_state['values']['nid'], 1, array('signup' => $form_state['values']));
   drupal_set_message(t('You will be signed up to !node after checkout.', array('!node' => l($node->title, 'node/' . $node->nid))));
   // Bypass the form submission by going directly to the cart
