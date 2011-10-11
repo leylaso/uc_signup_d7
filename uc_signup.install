@@ -27,7 +27,7 @@ function uc_signup_schema() {
       ),
     ),
     'indexes' => array(
-      'oid' => array('oid'),
+      'order_id' => array('order_id'),
       'sid' => array('sid'),
     ),
   );
