@@ -93,7 +93,7 @@ function uc_signup_form_uc_product_add_to_cart_form_alter(&$form, &$form_state) 
  * @param $node
  *   Either the nid or node object
  */
-function _uc_signup_node_check(&$node) {
+function _uc_signup_node_check($node) {
   if (is_numeric($node)) {
     $node = node_load($node);
   }
