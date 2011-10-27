@@ -8,7 +8,6 @@
  * Insert our own validation function into the signup form
  */
 function uc_signup_form_signup_form_alter(&$form, &$form_state, $form_id) {
-  watchdog('uc_signup', '<pre>' . var_export($form, true) . '</pre>');
   $node = $form_state['build_info']['args'][0];
   if (!_uc_signup_admin_check($form) && _uc_signup_node_check($node)) {
     $form['#submit'] = array('uc_signup_form_submit');
@@ -44,8 +43,6 @@ function uc_signup_uc_checkout_complete($order, $account) {
     if (_uc_signup_node_check($product->nid)) {
       $sid = 0;
       $signup = $product->data['signup'];
-      watchdog('uc_signup', var_export($order, true));
-      watchdog('uc_signup', var_export($account, true));
 
       // Change some values in the signup object based on the $account object if it exists
       if (isset($signup['signup_anon_mail']) && $account->uid > 0 && $signup['signup_anon_mail'] == $account->mail) {
@@ -53,7 +50,6 @@ function uc_signup_uc_checkout_complete($order, $account) {
         $signup['email_address'] = $account->mail;
         $signup['uid'] = $account->uid;
       }
-      watchdog('uc_signup', var_export($signup, true));
 
       if ($signup['email_address'] == $account->mail) {
         $sid = signup_sign_up_user($signup);
