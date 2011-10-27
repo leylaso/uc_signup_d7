@@ -43,6 +43,9 @@ function uc_signup_uc_checkout_complete($order, $account) {
     if (_uc_signup_node_check($product->nid)) {
       $sid = 0;
       $signup = $product->data['signup'];
+      watchdog('uc_signup', var_export($order, true));
+      watchdog('uc_signup', var_export($account, true));
+      watchdog('uc_signup', var_export($signup, true));
       if ($signup['email_address'] == $account->mail) {
         $sid = signup_sign_up_user($signup);
 
