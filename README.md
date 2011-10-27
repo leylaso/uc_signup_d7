@@ -9,3 +9,9 @@ Configuration
 Once the module is installed, you need only enable signups on an ubercart product. The module does the rest.
 
 You may also want to edit the signup views to add some links to the orders associated with individual signups.
+
+Development TODO
+----------------
+
+* Implement hook_uc_order to take appropriate actions on signups when order statuses are changed or orders are deleted. (Question: should signups be deleted with their associated orders?)
+
