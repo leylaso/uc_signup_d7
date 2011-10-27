@@ -45,11 +45,20 @@ function uc_signup_uc_checkout_complete($order, $account) {
       $signup = $product->data['signup'];
       watchdog('uc_signup', var_export($order, true));
       watchdog('uc_signup', var_export($account, true));
+
+      // Change some values in the signup object based on the $account object if it exists
+      if (isset($signup['signup_anon_mail']) && $account->uid > 0 && $signup['signup_anon_mail'] == $account->mail) {
+        unset($signup['signup_anon_mail']);
+        $signup['email_address'] = $account->mail;
+        $signup['uid'] = $account->uid;
+      }
       watchdog('uc_signup', var_export($signup, true));
+
       if ($signup['email_address'] == $account->mail) {
         $sid = signup_sign_up_user($signup);
-
       }
+
+      // TODO Check if this else is still pertinent, now that we adjust anonymous signups based on uc account info
       else {
         module_load_include('inc', 'signup', 'includes/signup_form');
         if (!isset($signup['signup_anon_mail'])) {
